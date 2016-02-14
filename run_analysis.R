@@ -19,3 +19,11 @@ y_test        <- read.table(paste0(datasetDir, "/test/y_test.txt"),         head
 subject_train <- read.table(paste0(datasetDir, "/train/subject_train.txt"), header = F, stringsAsFactors = F, fill = T)
 x_train       <- read.table(paste0(datasetDir, "/train/X_train.txt"),       header = F, stringsAsFactors = F, fill = T)
 y_train       <- read.table(paste0(datasetDir, "/train/y_train.txt"),       header = F, stringsAsFactors = F, fill = T)
+
+# Read the variables names from features.txt
+features <- read.table(paste0(datasetDir,"/features.txt"), header = F, stringsAsFactors = F, fill = T)
+
+# Merge the training and the test sets into single data set
+mergedData <- cbind(rbind(subject_test, subject_train), 
+	                rbind(y_test, y_train),
+                    rbind(x_test, x_train))
