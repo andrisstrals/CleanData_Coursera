@@ -34,3 +34,11 @@ colnames(mergedData)[3:563] <- features[, 2]
 
 # Subset mergedData to only include columns which name includes "mean", "std", "Activity" or "Subject" but not "meanFreq"
 mergedData <- mergedData[, grepl("mean()|std()|Activity|Subject", colnames(mergedData)) & !grepl("meanFreq", colnames(mergedData))]
+
+# To use descriptive activity names to name the activities in the data set
+# Read activity names from activity_labels.txt
+activities <- read.table(paste0(datasetDir, "/activity_labels.txt", header = F, stringsAsFactors = F, fill = T)
+
+# Label the data set with descriptive activity names.
+mergedData$Activity <- factor(mergedData$Activity, levels = activities[, 1], labels = activities[, 2])
+
