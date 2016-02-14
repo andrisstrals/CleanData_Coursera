@@ -5,11 +5,11 @@ if(!file.exists(dataDirName)) {
 }
 
 # Download and unzip source data
-# zipUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-# tmpFile <- tempfile()
-# library(RCurl)
-# download.file(zipUrl, destfile = tmpFile, method = "libcurl")
-# unzip(tmpFile, exdir = dataDirName)
+zipUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+tmpFile <- tempfile()
+library(RCurl)
+download.file(zipUrl, destfile = tmpFile, method = "libcurl")
+unzip(tmpFile, exdir = dataDirName)
 
 ## Read all the data sets
 datasetDir <- paste0(dataDirName, "/UCI HAR Dataset")
@@ -37,8 +37,15 @@ mergedData <- mergedData[, grepl("mean()|std()|Activity|Subject", colnames(merge
 
 # To use descriptive activity names to name the activities in the data set
 # Read activity names from activity_labels.txt
-activities <- read.table(paste0(datasetDir, "/activity_labels.txt", header = F, stringsAsFactors = F, fill = T)
+activities <- read.table(paste0(datasetDir, "/activity_labels.txt"), header = F, stringsAsFactors = F, fill = T)
 
 # Label the data set with descriptive activity names.
 mergedData$Activity <- factor(mergedData$Activity, levels = activities[, 1], labels = activities[, 2])
 
+# Create an independent tidy data set with the average of each variable for each activity and each subject.
+library(plyr)
+tidyData <- ddply(mergedData, .(Subject, Activity),
+                  .fun=function(x) { colMeans(x[ ,-c(1:2)]) })
+
+# Write out resulting tidy data set into CSV
+write.csv(tidyData, "./data/tidydata.txt", row.names = FALSE)
