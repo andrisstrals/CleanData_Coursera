@@ -27,3 +27,10 @@ features <- read.table(paste0(datasetDir,"/features.txt"), header = F, stringsAs
 mergedData <- cbind(rbind(subject_test, subject_train), 
 	                rbind(y_test, y_train),
                     rbind(x_test, x_train))
+
+# Set meaningful names 
+colnames(mergedData)[1:2] <- c("Subject", "Activity")
+colnames(mergedData)[3:563] <- features[, 2]
+
+# Subset mergedData to only include columns which name includes "mean", "std", "Activity" or "Subject" but not "meanFreq"
+mergedData <- mergedData[, grepl("mean()|std()|Activity|Subject", colnames(mergedData)) & !grepl("meanFreq", colnames(mergedData))]
