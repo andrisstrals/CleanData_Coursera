@@ -5,9 +5,17 @@ if(!file.exists(dataDirName)) {
 }
 
 # Download and unzip source data
-zipUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-tmpFile <- tempfile()
-library(RCurl)
-download.file(zipUrl, destfile = tmpFile, method = "libcurl")
-unzip(tmpFile, exdir = dataDirName)
+# zipUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+# tmpFile <- tempfile()
+# library(RCurl)
+# download.file(zipUrl, destfile = tmpFile, method = "libcurl")
+# unzip(tmpFile, exdir = dataDirName)
 
+## Read all the data sets
+datasetDir <- paste0(dataDirName, "/UCI HAR Dataset")
+subject_test  <- read.table(paste0(datasetDir, "/test/subject_test.txt"),   header = F, stringsAsFactors = F, fill = T)
+x_test        <- read.table(paste0(datasetDir, "/test/X_test.txt"),         header = F, stringsAsFactors = F, fill = T)
+y_test        <- read.table(paste0(datasetDir, "/test/y_test.txt"),         header = F, stringsAsFactors = F, fill = T)
+subject_train <- read.table(paste0(datasetDir, "/train/subject_train.txt"), header = F, stringsAsFactors = F, fill = T)
+x_train       <- read.table(paste0(datasetDir, "/train/X_train.txt"),       header = F, stringsAsFactors = F, fill = T)
+y_train       <- read.table(paste0(datasetDir, "/train/y_train.txt"),       header = F, stringsAsFactors = F, fill = T)
