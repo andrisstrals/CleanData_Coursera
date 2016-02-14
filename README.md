@@ -8,7 +8,7 @@ The main script in this project is 'run_analysis.R' which performs the following
 1. Downloads data from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 2. Unzips all files into "./data" directory
 3. Reads all the data for Subject, X, and Y, both training and test datasets using `read.csv` function.
-4. Uses 'rbind' to merge training and test data sets, and 'cbind' to merge Subject, Activity and Measurements.
+4. Uses `rbind` to merge training and test data sets, and 'cbind' to merge Subject, Activity and Measurements.
 5. Gives hard-coded names for **Subject** and **Activity** columns, reads "features.txt" to give meaningful names for other columns in the combined data set.
 6. Uses `grepl` to find all column names containing **"mean"** or **"std"**. Columns containing **"meanFreq"** are excluded since these contain rate of measurement but not sensor data.
 7. Reads IDs and names of activities from "activity_labels.txt" and converts activity ids in the dataset to descriptive names of activities using `factor`.
